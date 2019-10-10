@@ -118,3 +118,11 @@ Le Port `e0/0` de `IOU4` est désactivé
                   RB
 ```
 
+On ping `PC3` vers `PC5` et nous écoutons entre `SW2/SW4` et `SW3/SW4`
+`SW2` envoie le broadcast à `SW3` et `SW4` puis `SW3` vers `SW4` mais `SW4` n'envoie rien vers `SW3` comme prévue.
+
+`SW2 +-----+ SW4`
+![SW2/SW4](images/SW2-SW4.PNG)
+
+`SW3 +-----+ SW4`
+![SW3/SW4](images/SW3-SW4.PNG)
