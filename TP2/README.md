@@ -131,3 +131,16 @@ On ping `PC3` vers `PC5` et nous écoutons entre `SW2/SW4` et `SW3/SW4`
 2: Fleche verte: Reply
 ![topo](images/topologie2.PNG)
 
+On veut mettre `SW4` en `bridge root`
+
+`IOU4(config)#spanning-tree vlan 1 priority 4096`
+
+```
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    4097
+             Address     aabb.cc00.0400
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+   ...
+```
