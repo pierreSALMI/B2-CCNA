@@ -128,7 +128,9 @@ On ping `PC3` vers `PC5` et nous écoutons entre `SW2/SW4` et `SW3/SW4`
 ![SW3/SW4](images/IOU3-IOU4.PNG)
 
 1: Fleche noir: Broadcast
+
 2: Fleche verte: Reply
+
 ![topo](images/topologie2.PNG)
 
 On veut mettre `SW4` en `bridge root`:
@@ -237,3 +239,14 @@ PC-4> ping 10.2.10.1
 No gateway found
 ```
 
+## IV Need perfs
+
+![lacp](images/lacp.PNG)
+
+```
+IOU2#show ip interface po1
+Port-channel1 is up, line protocol is up
+  Inbound  access list is not set
+  Outgoing access list is not set
+
+```
