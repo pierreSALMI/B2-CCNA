@@ -153,3 +153,87 @@ Après:
 
 ![Apres](images/Apres.PNG)
 
+## III. Isolation
+
+### 1. Simple
+
+![topologie](images/topologie3.PNG)
+
+* Vlan:
+```
+   VLAN Name                             Status    Ports
+   ---- -------------------------------- --------- -------------------------------
+   1    default                          active    Et0/3, Et1/0, Et1/1, Et1/2
+                                                   Et1/3, Et2/0, Et2/1, Et2/2
+                                                   Et2/3, Et3/0, Et3/1, Et3/2
+                                                   Et3/3
+   10   client-network                   active    Et0/0
+   20   server-network                   active    Et0/1, Et0/2
+```
+
+* Ping:
+`PC2` ping `PC3`
+```
+PC-2> ping 10.2.3.3
+84 bytes from 10.2.3.3 icmp_seq=1 ttl=64 time=0.242 ms
+84 bytes from 10.2.3.3 icmp_seq=2 ttl=64 time=0.335 ms
+84 bytes from 10.2.3.3 icmp_seq=3 ttl=64 time=0.326 ms
+84 bytes from 10.2.3.3 icmp_seq=4 ttl=64 time=0.301 ms
+```
+
+`PC1` ping `PC3`
+```
+   PC-1> ping 10.2.3.3
+   host (10.2.3.3) not reachable
+```
+
+### 2. Trunk
+
+![topologie](images/topologie4.PNG)
+
+* Interface trunk
+```
+IOU2#show  interfaces trunk
+
+Port        Mode             Encapsulation  Status        Native vlan
+Et0/1       on               802.1q         trunking      1
+
+Port        Vlans allowed on trunk
+Et0/1       10,20
+
+Port        Vlans allowed and active in management domain
+Et0/1       10,20
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Et0/1       10,20
+```
+
+* Ping
+
+`PC1` ne peut joindre que `PC3`
+```
+PC-1> ping 10.2.10.2
+84 bytes from 10.2.10.2 icmp_seq=1 ttl=64 time=0.338 ms
+84 bytes from 10.2.10.2 icmp_seq=2 ttl=64 time=0.482 ms
+84 bytes from 10.2.10.2 icmp_seq=3 ttl=64 time=0.481 ms
+84 bytes from 10.2.10.2 icmp_seq=4 ttl=64 time=0.410 ms
+^C
+
+
+PC-1> ping 10.2.20.2
+No gateway found
+```
+
+`PC4` ne peut joindre que `PC2`
+```
+PC-4> ping 10.2.20.1
+84 bytes from 10.2.20.1 icmp_seq=1 ttl=64 time=0.437 ms
+84 bytes from 10.2.20.1 icmp_seq=2 ttl=64 time=0.447 ms
+84 bytes from 10.2.20.1 icmp_seq=3 ttl=64 time=0.441 ms
+^C
+
+
+PC-4> ping 10.2.10.1
+No gateway found
+```
+
