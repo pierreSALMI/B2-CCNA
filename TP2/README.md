@@ -127,3 +127,7 @@ On ping `PC3` vers `PC5` et nous écoutons entre `SW2/SW4` et `SW3/SW4`
 `SW3 +-----+ SW4`
 ![SW3/SW4](images/IOU3-IOU4.PNG)
 
+1: Fleche noir: Broadcast
+2: Fleche verte: Reply
+![topo](images/topologie2.PNG)
+
