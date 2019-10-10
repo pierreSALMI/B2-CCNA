@@ -146,3 +146,8 @@ VLAN0001
    ...
 ```
 
+Avant:
+![Avant](images/Avant.PNG)
+
+Après:
+![Apres](images/Apres.PNG)
