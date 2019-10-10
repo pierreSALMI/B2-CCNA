@@ -12,7 +12,7 @@ Ping PC1 --> PC2
 
 Le protocole utilisé par le `ping` est `ICMP`
 
-L'échange ARP vue sur Wireshark correspond aux tables ARP des machines
+L'échange `ARP` vue sur Wireshark correspond aux tables `ARP` des machines
 ```
 PC-1> show arp
 
@@ -77,4 +77,43 @@ Vlan    Mac Address       Type        Ports
    1    aabb.cc00.0410    DYNAMIC     Et0/2
 Total Mac Addresses for this criterion: 6
 ```
-Vlan: Nous n'avons pas modifier le Vlan donc le Vlan par defaut est 1.
+Vlan: Nous n'avons pas modifier le Vlan donc le Vlan par defaut est 1 pour la `Mac Address` désigné.
+Mac Address: Adresse Mac des machines avec qui il communique
+Type: Définie comment `Mac Address` est récupéré (ici en `DYNAMIC` car nous l'avons récupéré par une requete ARP) 
+Ports: Quelle port communique à la `Mac Address` désigné
+
+![CDP](images/CDP.PNG)
+
+Cisco Discovery Protocol est un protocole de niveau 2 développé par Cisco permettant de ce connecté au péripherique voisin comme un routeur, un switch ou une machine.
+
+* Spanning Tree Protocol
+
+Le Switch `IOU2` est le `Root Bridge`
+```
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     aabb.cc00.0200
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+   ...
+   ``` 
+
+Le Port `e0/0` de `IOU4` est désactivé
+`Et0/0               Altn BLK 100       128.1    Shr` 
+
+                        +-----+
+                        | PC4 |
+                        +--+--+
+                           |
+                           |
+                       +---+---+
+                   +---+  SW3  +----+
+                   |   +-------+    |
+                   |                |
+                   |                |
++-----+        +---+---+        +---+---+        +-----+
+| PC3 +--------+  SW2  +--------+  SW4  +--------+ PC5 |
++-----+        +-------+        +-------+        +-----+
+
+
