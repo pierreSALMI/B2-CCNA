@@ -90,7 +90,22 @@ PC-3> ping 10.3.40.1
 | U1-16   | 10.3.2.0/27 | 255.255.255.224 | 20   |
 | S1-8    | 10.3.3.0/28 | 255.255.255.240 | 30   |
 | P1-5    | 10.3.4.0/28 | 255.255.255.240 | 40   |
-| SRV2-5  | 10.3.4.0/29 | 255.255.255.248 | 40   |
-| SS1&6   | 10.3.5.0/29 | 255.255.255.248 | 50   |
+| SRV2-5  | 10.3.4.0/29 | 255.255.255.248 | 50   |
+| SS1&6   | 10.3.5.0/29 | 255.255.255.248 | 60   |
 
+
+Apres avoir configurer les switchs  ont ce retrouve avec cette configuration pour les Vlans (sauf le `IOU2`)
+
+```
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active
+10   Admin                            active    Et0/1, Et0/2, Et0/3
+20   User                             active    Et1/0, Et1/1, Et1/2, Et1/3
+                                                Et2/0, Et2/1, Et2/2, Et2/3
+30   Stag                             active    Et3/0, Et3/1, Et3/2, Et3/3
+40   Imp                              active    Et4/0, Et4/1, Et4/2, Et4/3
+50   SRV                              active
+60   SS                               active
+```
 
