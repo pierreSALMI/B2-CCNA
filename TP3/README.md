@@ -155,3 +155,97 @@ VLAN Name                             Status    Ports
 60   SS                               active    Et0/1, Et0/2
 ```
 
+#### ACL
+On mets en place des ACLs pour que les réseau et Vlans communique seulement entre eux. (Les exceptions ce feront plus tard)
+
+```
+Standard IP access list 10
+    10 permit 10.3.1.0, wildcard bits 0.0.0.7
+Standard IP access list 20
+    10 permit 10.3.2.0, wildcard bits 0.0.0.31
+Standard IP access list 30
+    10 permit 10.3.3.0, wildcard bits 0.0.0.15
+Standard IP access list 40
+    10 permit 10.3.4.0, wildcard bits 0.0.0.15
+Standard IP access list 50
+    10 permit 10.3.5.0, wildcard bits 0.0.0.7
+Standard IP access list 60
+    10 permit 10.3.6.0, wildcard bits 0.0.0.7
+```
+
+
+#### NAT
+
+On configure le routeur pour qu'il est acces à la nat
+```
+R1#ping 8.8.8.8
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 8.8.8.8, timeout is 2 seconds:
+.!!!!
+Success rate is 80 percent (4/5), round-trip min/avg/max = 60/83/96 ms
+```
+
+Je n'ais pas réussi à faire communiquer les PCs avec la nat avec la config ci-dessous:
+```
+interface Ethernet0/0
+ no ip address
+ ip nat inside
+ ip virtual-reassembly
+ half-duplex
+!
+interface Ethernet0/0.10
+ encapsulation dot1Q 10
+ ip address 10.3.1.5 255.255.255.248
+ ip access-group 10 in
+ ip access-group 10 out
+ ip nat inside
+ ip virtual-reassembly
+!
+...
+```
+
+### Vérification de l'infra
+
+Avec l'infra actuelle les PCs ce ping entre eux seulement s'ils sont du meme type (Admin, Users, Stagiraire, Imprimante, Serveur, Serveur sensible)
+
+User1 -> Stagiaire3
+```
+U1> ping 10.3.3.3
+*10.3.2.29 icmp_seq=1 ttl=255 time=9.425 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.3.2.29 icmp_seq=2 ttl=255 time=3.853 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.3.2.29 icmp_seq=3 ttl=255 time=8.999 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.3.2.29 icmp_seq=4 ttl=255 time=2.822 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.3.2.29 icmp_seq=5 ttl=255 time=2.622 ms (ICMP type:3, code:13, Communication administratively prohibited)
+```
+
+User1 -> User7
+```
+U1> ping 10.3.2.7
+84 bytes from 10.3.2.7 icmp_seq=1 ttl=64 time=0.697 ms
+84 bytes from 10.3.2.7 icmp_seq=2 ttl=64 time=1.444 ms
+84 bytes from 10.3.2.7 icmp_seq=3 ttl=64 time=0.672 ms
+84 bytes from 10.3.2.7 icmp_seq=4 ttl=64 time=0.983 ms
+84 bytes from 10.3.2.7 icmp_seq=5 ttl=64 time=0.984 ms
+```
+
+Stagiaire3 - Imp4
+
+```
+S3> ping 10.3.4.4
+*10.3.3.13 icmp_seq=1 ttl=255 time=19.764 ms (ICMP type:3, code:13, Communication administratively prohibited)
+10.3.4.4 icmp_seq=2 timeout
+*10.3.3.13 icmp_seq=3 ttl=255 time=2.426 ms (ICMP type:3, code:13, Communication administratively prohibited)
+10.3.4.4 icmp_seq=4 timeout
+*10.3.3.13 icmp_seq=5 ttl=255 time=7.970 ms (ICMP type:3, code:13, Communication administratively prohibited)
+```
+
+Admin -> Imp4
+```
+A3> ping 10.3.4.4
+*10.3.1.5 icmp_seq=1 ttl=255 time=9.980 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.3.1.5 icmp_seq=2 ttl=255 time=8.450 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.3.1.5 icmp_seq=3 ttl=255 time=2.258 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.3.1.5 icmp_seq=4 ttl=255 time=1.514 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.3.1.5 icmp_seq=5 ttl=255 time=8.070 ms (ICMP type:3, code:13, Communication administratively prohibited)
+```
