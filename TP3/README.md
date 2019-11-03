@@ -88,7 +88,7 @@ PC-3> ping 10.3.40.1
 
 ![topologie2](images/topologie2.PNG)
 
-Les Switchs de chaque salle seront au milieu pour pouvoir connecté chaque machine avec des câbles court. Le tous sera relié part câbles long au Switch 0 qui reliera le Routeur part un câble court.
+Les Switchs de chaque salle seront au milieu pour pouvoir connecté chaque machine avec des câbles court. Le tout sera relié part câbles long au Switch 0 qui reliera le Routeur part un câble court.
 Attention: Les machines au extremite des salles auront peut être besoin de câbles Moyen. 
 
 Court: 39 
