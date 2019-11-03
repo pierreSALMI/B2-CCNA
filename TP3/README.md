@@ -92,7 +92,9 @@ Les Switchs de chaque salle seront au milieu pour pouvoir connecté chaque machi
 Attention: Les machines au extremite des salles auront peut être besoin de câbles Moyen. 
 
 Court: 39 
+
 Moyen: 0 
+
 Long: 5 
 
 ### Configuration
