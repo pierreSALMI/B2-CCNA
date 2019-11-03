@@ -88,7 +88,16 @@ PC-3> ping 10.3.40.1
 
 ![topologie2](images/topologie2.PNG)
 
+Les Switchs de chaque salle seront au milieu pour pouvoir connecté chaque machine avec des câbles court. Le tous sera relié part câbles long au Switch 0 qui reliera le Routeur part un câble court.
+Attention: Les machines au extremite des salles auront peut être besoin de câbles Moyen. 
+
+Court: 39
+Moyen: 0
+Long: 5
+
 ### Configuration
+
+#### Adressage
 
 | Machine | Reseau      | Masque          | VLAN |
 |---------|-------------|-----------------|------|
@@ -99,17 +108,20 @@ PC-3> ping 10.3.40.1
 | SRV2-5  | 10.3.4.0/29 | 255.255.255.248 | 50   |
 | SS1&6   | 10.3.5.0/29 | 255.255.255.248 | 60   |
 
-
 |        X       | Admin |     User    |  Stag |  Imp  |  SRV  |    SS   |
 |:--------------:|:-----:|:-----------:|:-----:|:-----:|:-----:|:-------:|
 | Switch 1-4-5-6 | 0/1-3 | 1/0-3 2/0-3 | 3/0-3 | 4/0-3 |   X   |    X    |
 |    Switch 2    |   X   |      X      |   X   |   X   | 1/0-3 | 0/1 0/2 |
 
+Le switch `IOU0` nous sert de passerelle avant la connection au routeur donc tous ses ports sont en mode trunk.
+
 | NAT     | Inside | Outside |
 |---------|--------|---------|
 | Routeur | 0/0    | 0/1     |
 
-Apres avoir configurer les switchs  ont ce retrouve avec cette configuration pour les Vlans (sauf le `IOU2`)
+
+#### Mise en place des VLANs
+Apres avoir configurer les switchs  ont ce retrouve avec cette configuration pour les Vlans.
 
 ```
 VLAN Name                             Status    Ports
@@ -122,5 +134,22 @@ VLAN Name                             Status    Ports
 40   Imp                              active    Et4/0, Et4/1, Et4/2, Et4/3
 50   SRV                              active
 60   SS                               active
+```
+
+Le switch 2 est connecte seulement au serveur donc sa configuration est differente
+
+```
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Et0/3, Et3/0, Et3/1, Et3/2
+                                                Et3/3, Et4/0, Et4/1, Et4/2
+                                                Et4/3
+10   Admin                            active
+20   User                             active
+30   Stag                             active
+40   Imp                              active
+50   SRV                              active    Et1/0, Et1/1, Et1/2, Et1/3
+                                                Et2/0, Et2/1, Et2/2, Et2/3
+60   SS                               active    Et0/1, Et0/2
 ```
 
