@@ -79,10 +79,16 @@ PC-3> ping 10.3.40.1
 
 ### Wireshark R1/SW1
 
-![topologie](images/ping-p1-pc2.PNG)
+![ping](images/ping-p1-pc2.PNG)
 
 
 ## I. Cas concret
+
+### Topologie
+
+![topologie2](images/topologie2.PNG)
+
+### Configuration
 
 | Machine | Reseau      | Masque          | VLAN |
 |---------|-------------|-----------------|------|
@@ -93,6 +99,15 @@ PC-3> ping 10.3.40.1
 | SRV2-5  | 10.3.4.0/29 | 255.255.255.248 | 50   |
 | SS1&6   | 10.3.5.0/29 | 255.255.255.248 | 60   |
 
+
+|        X       | Admin |     User    |  Stag |  Imp  |  SRV  |    SS   |
+|:--------------:|:-----:|:-----------:|:-----:|:-----:|:-----:|:-------:|
+| Switch 1-4-5-6 | 0/1-3 | 1/0-3 2/0-3 | 3/0-3 | 4/0-3 |   X   |    X    |
+|    Switch 2    |   X   |      X      |   X   |   X   | 1/0-3 | 0/1 0/2 |
+
+| NAT     | Inside | Outside |
+|---------|--------|---------|
+| Routeur | 0/0    | 0/1     |
 
 Apres avoir configurer les switchs  ont ce retrouve avec cette configuration pour les Vlans (sauf le `IOU2`)
 
