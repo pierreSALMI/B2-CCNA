@@ -1,0 +1,38 @@
+!
+!
+!
+interface FastEthernet0/0
+ ip address dhcp
+ ip nat outside
+ ip virtual-reassembly
+ duplex half
+!
+interface Ethernet1/0
+ no ip address
+ duplex half
+!
+interface Ethernet1/0.30
+ encapsulation dot1Q 30
+ ip address 10.5.30.254 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly
+!
+interface Ethernet1/1
+ no ip address
+ duplex half
+!
+interface Ethernet1/1.10
+ encapsulation dot1Q 10
+ ip address 10.5.10.254 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly
+!
+interface Ethernet1/1.20
+ encapsulation dot1Q 20
+ ip address 10.5.20.254 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly
+!
+ip nat inside source list 1 interface FastEthernet0/0 overload
+!
+access-list 1 permit any
